@@ -40,17 +40,18 @@ jobs:
               run: |
                   sudo apt-get update
                   sudo apt-get install -y ffmpeg
-
-            - name: Install dependencies
-              run: |
-                  composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-                  composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+                  ffmpeg -version
 
             - name: Cache dependencies
               uses: actions/cache@v4
               with:
                   path: ~/.composer/cache/files
                   key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}-dep-${{ matrix.dependency-version }}
+
+            - name: Install dependencies
+              run: |
+                  composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+                  composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
             - name: Execute tests
               run: vendor/bin/phpunit --order-by random
