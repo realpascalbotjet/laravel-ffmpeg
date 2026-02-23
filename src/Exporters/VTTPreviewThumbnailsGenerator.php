@@ -76,8 +76,8 @@ class VTTPreviewThumbnailsGenerator
 
         return Collection::range(1, $totalFiles * $thumbsPerTile)
             ->map(function ($thumb) use ($thumbsPerTile) {
-                $start = $this->getTimestamp($thumb - 1, $this->tileFilter->interval);
-                $end = $this->getTimestamp($thumb, $this->tileFilter->interval);
+                $start = $this->getTimestamp($thumb - 1);
+                $end = $this->getTimestamp($thumb);
 
                 $fileKey = ceil($thumb / $thumbsPerTile);
 
